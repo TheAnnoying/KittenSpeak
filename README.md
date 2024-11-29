@@ -3,7 +3,7 @@
 Make your messages sound like a cat~
 
 ## Installation
-Follow [the Vencord documentation](https://docs.vencord.dev/) to install Vencord from source.
+Follow [the Vencord documentation](https://docs.vencord.dev/installing/custom-plugins/) to install Vencord from source.
 
 From the `userplugins` folder, run:
 ```
