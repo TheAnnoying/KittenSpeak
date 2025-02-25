@@ -5,10 +5,10 @@
 */
 
 import { addChatBarButton, ChatBarButton, removeChatBarButton } from "@api/ChatButtons";
-import { addButton, removeButton } from "@api/MessagePopover";
+import { addMessagePopoverButton, removeMessagePopoverButton } from "@api/MessagePopover";
 import { InfoIcon } from "@components/Icons";
 import { updateMessage } from "@api/MessageUpdater";
-import { addPreSendListener, removePreSendListener } from "@api/MessageEvents";
+import { addMessagePreSendListener, removeMessagePreSendListener } from "@api/MessageEvents";
 import { definePluginSettings } from "@api/Settings";
 import definePlugin, { OptionType } from "@utils/types";
 import { React, ChannelStore } from "@webpack/common";
@@ -118,7 +118,7 @@ export default definePlugin({
     dependencies: ["MessageEventsAPI", "ChatInputButtonAPI", "MessagePopoverAPI"],
     settings,
     async start() {
-        addButton("vc-kittenspeak-decoder", msg => {
+        addMessagePopoverButton("vc-kittenspeak-decoder", msg => {
             if (!msg.content.endsWith(ruleKeys.kittenIndicator)) return null;
 
             return {
@@ -140,14 +140,14 @@ export default definePlugin({
             };
         });
         addChatBarButton("vc-kittenspeak", KittenToggle);
-        this.preSend = addPreSendListener((_, msg) => {
+        this.preSend = addMessagePreSendListener((_, msg) => {
             if (settings.store.isEnabled && msg.content.length > 0) msg.content = applyKitten(msg.content);
         });
     },
     stop() {
         messageList = {};
-        removeButton("vc-kittensepak-decoder");
+        removeMessagePopoverButton("vc-kittensepak-decoder");
         removeChatBarButton("vc-kittenspeak");
-        removePreSendListener(this.preSend);
+        removeMessagePreSendListener(this.preSend);
     }
 });
